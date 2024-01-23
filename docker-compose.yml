@@ -1,0 +1,18 @@
+version: "3.3"
+
+services:
+  logrotate:
+    image: logrotate:v1.1.0
+    container_name: lorotate
+    volumes:
+      - "./config/logrotate.conf:/var/config/logrotate.conf"
+      - "./log-test:/var/log/docker/redis/logs"
+      - "./log-sentinel:/var/log/docker/sentinel/logs"
+      - "./log-postgres:/var/log/docker/postgres/logs"
+    environment:
+      # - LOGS_DIRECTORIES=/var/log/docker
+      - LOGROTATE_CONFIG=/var/config/logrotate.conf
+      # - LOGROTATE_SIZE=5k
+      - LOGROTATE_CRONSCHEDULE=*/5 * * * * *
+      - TZ=Asia/Ho_Chi_Minh
+    restart: always
